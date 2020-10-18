@@ -17,12 +17,12 @@ TOKEN = env["discord_token"]
 client = discord.Client()
 
 
-def get_server_info():
+def get_server_info(state: str = "running"):
     ec2 = boto3.resource("ec2")
 
     # Get information for all running instances
     running_instances = ec2.instances.filter(
-        Filters=[{"Name": "instance-state-name", "Values": ["running"]}]
+        Filters=[{"Name": "instance-state-name", "Values": [state]}]
     )
 
     for instance in running_instances:
@@ -36,7 +36,7 @@ def get_server_info():
 
 
 def start_server() -> str:
-    instance = get_server_info()
+    instance = get_server_info("stopped")
     ec2_client = boto3.client("ec2")
     if instance is not None:
 
