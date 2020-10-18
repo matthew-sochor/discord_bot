@@ -59,6 +59,8 @@ def start_server() -> str:
             "-t",
             "/home/ubuntu/tmux_launch.sh",
         ]
+        time.sleep(5)
+        print(start_server)
         _ = subprocess.run(start_server)
         client = boto3.client("route53")
         client.change_resource_record_sets(
