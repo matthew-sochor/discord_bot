@@ -44,8 +44,8 @@ def start_server() -> str:
             instance = yaml.load(fp, Loader=yaml.FullLoader)
         _ = ec2_client.start_instances(InstanceIds=[instance["id"]])
         instance = get_server_info()
-        while instance.state["Name"] != "running":
-            print(f"Instance not ready yet, in state: {instance.state['Name']}")
+        while instance is None:
+            print(f"Instance not ready yet, sleeping 5...")
             time.sleep(5)
             instance = get_server_info()
 
